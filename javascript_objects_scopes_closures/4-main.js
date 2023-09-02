@@ -1,0 +1,16 @@
+Normal:
+XX
+XX
+XX
+Double:
+XXXX
+XXXX
+XXXX
+XXXX
+XXXX
+XXXX
+Rotate:
+XXXXXX
+XXXXXX
+XXXXXX
+XXXXXX

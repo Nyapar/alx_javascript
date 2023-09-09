@@ -2,42 +2,33 @@
 
 const request = require('request');
 
-// Check if the correct number of command-line arguments are provided
-if (process.argv.length !== 3) {
-  console.error('Usage: node 5-starwars_characters.js <Movie ID>');
-  process.exit(1);
-}
-
-// Get the Movie ID from the command-line argument
 const movieId = process.argv[2];
+const url = `https://swapi.dev/api/films/${movieId}/`;
+let characters = [];
 
-// Define the URL for the Star Wars API
-const apiUrl = `https://swapi.dev/api/films/${movieId}/`;
+request(url, (error, response, body) => {
+  if (error) {
+    console.log(error);
+    return;
+  }
 
-// Function to fetch and print characters for a given movie
-function fetchAndPrintCharacters(url) {
-  request(url, (error, response, body) => {
+  const data = JSON.parse(body);
+  characters = data.characters;
+  getCharacters(0);
+});
+
+const getCharacters = (index) => {
+  if (index === characters.length) {
+    return;
+  }
+
+  request(characters[index], (error, response, body) => {
     if (error) {
-      console.error('An error occurred:', error);
-    } else {
-      const data = JSON.parse(body);
-      console.log(`Characters in ${data.title}:`);
-
-      // Loop through characters and print their names
-      data.characters.forEach((characterUrl) => {
-        request(characterUrl, (charError, charResponse, charBody) => {
-          if (charError) {
-            console.error('An error occurred:', charError);
-          } else {
-            const characterData = JSON.parse(charBody);
-            console.log(characterData.name);
-          }
-        });
-      });
+      console.log(error);
+      return;
     }
+    const characterData = JSON.parse(body);
+    console.log(characterData.name);
+    getCharacters(index + 1);
   });
-}
-
-// Fetch and print characters for the specified movie
-fetchAndPrintCharacters(apiUrl);
-
+};

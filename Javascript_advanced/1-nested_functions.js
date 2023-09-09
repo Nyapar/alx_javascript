@@ -1,4 +1,3 @@
-#!/usr/bin/node
 // Define a global variable
 var globalVariable = 'Welcome';
 

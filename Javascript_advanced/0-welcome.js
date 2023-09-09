@@ -1,4 +1,3 @@
-#!/usr/bin/node
 function welcome(firstName, lastName) {
   // Concatenate firstName and lastName with a space in between
   const fullName = firstName + ' ' + lastName;
